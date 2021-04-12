@@ -1,65 +1,50 @@
 import 'package:flutter/material.dart';
+import './question.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  _MyAppState createState() => _MyAppState();
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
 
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
+  void answerQuestion() {
     setState(() {
-      _counter++;
+      _questionIndex = _questionIndex+1;
     });
+    print(_questionIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+    var questions = [
+      'what is your favourite color?',
+      'what is your favourite animal?'
+    ];
+    return MaterialApp(
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Atech Flutter'),
+        ),
+        body: new Column(
+          children: [
+            new Question(questions[_questionIndex]),
+            RaisedButton(
+                child: new Text('Answer 1'), onPressed: answerQuestion),
+            RaisedButton(
+                child: new Text('Answer 2'), onPressed: answerQuestion),
+            RaisedButton(
+              child: new Text('Answer 3'),
+              onPressed: () => print('hello world'),
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
